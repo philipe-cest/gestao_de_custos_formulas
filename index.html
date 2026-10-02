@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEST Anil - Gestão de Custos - Quadro Geral de Fórmulas e Relações</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-navy: #002060;
+            --border-line: #cbd5e1;
+            --bg-canvas: #f8fafc;
+            --surface-card: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --formula-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0.35rem 0.5rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', Consolas, monospace;
+        }
+
+        .item-card {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border-line);
+            border-radius: 3px;
+            padding: 0.2rem 0.35rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .formula-box {
+            font-family: 'IBM Plex Mono', Consolas, monospace;
+            background-color: var(--formula-bg);
+            border-left: 2px solid var(--primary-navy);
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 2px;
+            padding: 0.12rem 0.3rem;
+            font-size: clamp(0.64rem, 0.73vw, 0.81rem);
+            font-weight: 700;
+            color: #002060;
+            line-height: 1.25;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .comment-text {
+            font-size: clamp(0.55rem, 0.60vw, 0.68rem);
+            color: var(--text-muted);
+            line-height: 1.15;
+            margin-top: 0.1rem;
+            display: block;
+        }
+
+        body.hide-notes .comment-text {
+            display: none !important;
+        }
+
+        .col-header {
+            background-color: var(--primary-navy);
+            color: #ffffff;
+            font-size: clamp(0.66rem, 0.73vw, 0.80rem);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.22rem 0.45rem;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.2rem;
+            border-bottom: 2px solid #001238;
+        }
+
+        .btn-action {
+            background-color: #ffffff;
+            color: #002060;
+            border: 1px solid #94a3b8;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.18rem 0.55rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn-action:hover {
+            background-color: #f1f5f9;
+            border-color: #002060;
+        }
+
+        .btn-action:active {
+            background-color: #e2e8f0;
+        }
+    </style>
+</head>
+<body id="mainBody">
+
+    <header class="w-full flex justify-between items-center bg-[#002060] text-white px-3 py-1.5 rounded-sm shrink-0 mb-1">
+        <div class="flex items-center gap-2">
+            <span class="bg-[#00143d] border border-blue-400/40 text-blue-100 font-bold text-[11px] px-2 py-0.5 rounded tracking-wide">CEST ANIL</span>
+            <div class="h-3.5 w-px bg-blue-300/40"></div>
+            <h1 class="text-xs md:text-sm font-semibold tracking-tight text-slate-100">
+                Gestão de Custos &amp; Custeio por Absorção - Relações Quantitativas e Nomenclaturas
+            </h1>
+            <span class="text-[11px] text-blue-200 hidden xl:inline">| Curso de Administração</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button id="toggleBtn" onclick="alternarComentarios()" class="btn-action">
+                Ocultar Comentários
+            </button>
+            <button onclick="alternarFullscreen()" class="btn-action">
+                Tela Cheia
+            </button>
+        </div>
+    </header>
+
+    <main class="grid grid-cols-4 gap-1.5 flex-1 min-h-0 w-full overflow-hidden">
+
+        <!-- =============================================================== -->
+        <!-- COLUNA 1: COMPOSIÇÃO FABRIL FUNDAMENTAL                         -->
+        <!-- =============================================================== -->
+        <section class="flex flex-col min-h-0 bg-white border border-slate-300 rounded-sm p-1">
+            <div class="col-header">
+                <span>1. Composição Fabril</span>
+                <span class="text-[10px] text-blue-200 mono">MOD. 01</span>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-between gap-1 overflow-hidden">
+                <!-- Custo Primário -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Primário (CP)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Direto</span>
+                    </div>
+                    <div class="formula-box">CP = MP + MOD</div>
+                    <div class="comment-text">
+                        Soma dos fatores diretos identificáveis. Custos Indiretos (CIF) são excluídos.
+                    </div>
+                </div>
+
+                <!-- Custo de Transformação -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo de Transformação (CT)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Conversão</span>
+                    </div>
+                    <div class="formula-box">CT = MOD + CIF</div>
+                    <div class="comment-text">
+                        Esforço fabril para converter os materiais. Matéria-Prima (MP) não entra no cálculo.
+                    </div>
+                </div>
+
+                <!-- CPP -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Produção Período (CPP)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Total Fabril</span>
+                    </div>
+                    <div class="formula-box">CPP = MP + MOD + CIF</div>
+                    <div class="comment-text">
+                        Total incorrido na fábrica no período. Despesas Adm./Vendas não integram o CPP.
+                    </div>
+                </div>
+
+                <!-- Custo Unitário -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Unitário Médio (Cu)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Unitário</span>
+                    </div>
+                    <div class="formula-box">Cu = CPP Total / Qtd. Produzida</div>
+                    <div class="comment-text">
+                        Custo médio absorvido por unidade pronta. Base de valoração do CPV e do Estoque.
+                    </div>
+                </div>
+
+                <!-- CSP -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Serviço Prestado (CSP)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Serviços</span>
+                    </div>
+                    <div class="formula-box">CSP = (Horas x Taxa/h) + Gastos Dir.</div>
+                    <div class="comment-text">
+                        Horas de especialistas multiplicadas pela taxa horária, somadas a despesas diretas.
+                    </div>
+                </div>
+
+                <!-- Taxa de MOD -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Taxa Horária de MOD</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Horária</span>
+                    </div>
+                    <div class="formula-box">Taxa MOD = Folha c/ Encargos / Horas</div>
+                    <div class="comment-text">
+                        Quociente entre folha fabril de mão de obra direta e total de horas apontadas.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- COLUNA 2: DINÂMICA DE ESTOQUES, DRE E PRECIFICAÇÃO              -->
+        <!-- =============================================================== -->
+        <section class="flex flex-col min-h-0 bg-white border border-slate-300 rounded-sm p-1">
+            <div class="col-header">
+                <span>2. Estoques, DRE &amp; Preço</span>
+                <span class="text-[10px] text-blue-200 mono">MOD. 02</span>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-between gap-1 overflow-hidden">
+                <!-- CPV -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Prod. Vendidos (CPV)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">DRE</span>
+                    </div>
+                    <div class="formula-box">CPV = Cu x Qtd. Vendida</div>
+                    <div class="comment-text">
+                        Regime de competência: o custo afeta o resultado apenas no momento da venda.
+                    </div>
+                </div>
+
+                <!-- Estoque Final -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Estoque Final Acabados (EF)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Ativo Circ.</span>
+                    </div>
+                    <div class="formula-box">EF = Cu x (Qtd. Fab. - Qtd. Vend.)</div>
+                    <div class="comment-text">
+                        Valor contábil ativado no Balanço Patrimonial pelas unidades remanescentes.
+                    </div>
+                </div>
+
+                <!-- Custo Fixo Retido -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custos Fixos Estocados</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Balanço</span>
+                    </div>
+                    <div class="formula-box">CF Retido = CFU x Qtd. em Estoque</div>
+                    <div class="comment-text">
+                        Custos fixos alocados às unidades estocadas que não transitaram pela DRE do período.
+                    </div>
+                </div>
+
+                <!-- Lucro Bruto -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Lucro Bruto Operacional</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">DRE</span>
+                    </div>
+                    <div class="formula-box">Lucro Bruto = Receita Líquida - CPV</div>
+                    <div class="comment-text">
+                        Resultado industrial do qual serão deduzidas as despesas operacionais da empresa.
+                    </div>
+                </div>
+
+                <!-- Formação Preço de Venda -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Preço de Venda (PV)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Aditivo</span>
+                    </div>
+                    <div class="formula-box">PV = Custo_u + Despesa_u + Margem_u</div>
+                    <div class="comment-text">
+                        Método clássico com base no custo pleno para cobertura de gastos e rentabilidade.
+                    </div>
+                </div>
+
+                <!-- Arbitramento Fiscal -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Arbitramento Fiscal de Estoque</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">RIR</span>
+                    </div>
+                    <div class="formula-box">Estoque = 70% x PV x Qtd. em Estoque</div>
+                    <div class="comment-text">
+                        Art. 303 RIR: aplicação cogente quando a entidade carece de sistema de custos.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- COLUNA 3: COMPORTAMENTO DOS CUSTOS E PERDAS                     -->
+        <!-- =============================================================== -->
+        <section class="flex flex-col min-h-0 bg-white border border-slate-300 rounded-sm p-1">
+            <div class="col-header">
+                <span>3. Comportamento &amp; Perdas</span>
+                <span class="text-[10px] text-blue-200 mono">MOD. 03</span>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-between gap-1 overflow-hidden">
+                <!-- Custo Fixo Unitário -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Fixo Unitário (CFU)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Diluição</span>
+                    </div>
+                    <div class="formula-box">CFU = Custo Fixo Total / Volume</div>
+                    <div class="comment-text">
+                        Diluição: variação inversamente proporcional à quantidade produzida.
+                    </div>
+                </div>
+
+                <!-- Custo Variável Total -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Variável Total (CV)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Proporcional</span>
+                    </div>
+                    <div class="formula-box">CV Total = CVU x Qtd. Produzida</div>
+                    <div class="comment-text">
+                        Crescimento linear estritamente dependente do nível de atividade fabril.
+                    </div>
+                </div>
+
+                <!-- Equação Custo Total -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Equação do Custo Total</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Estrutural</span>
+                    </div>
+                    <div class="formula-box">Custo Total = CF + (CVU x Qtd)</div>
+                    <div class="comment-text">
+                        Reta fundamental da Análise Custo-Volume-Lucro (parcela fixa + variável).
+                    </div>
+                </div>
+
+                <!-- Custo Semivariável -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Custo Semivariável / Misto</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Misto</span>
+                    </div>
+                    <div class="formula-box">C_Misto = Parcela Fixa + (Taxa x Qtd)</div>
+                    <div class="comment-text">
+                        Combinação de franquia básica (demanda) e remuneração variável pelo consumo.
+                    </div>
+                </div>
+
+                <!-- Perda Normal -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Absorção de Perda Normal</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Inerente</span>
+                    </div>
+                    <div class="formula-box">Cu = Custo Lote / (Qtd_ini - Qtd_perd)</div>
+                    <div class="comment-text">
+                        Desperdício do processo: o valor da perda é absorvido pelas peças perfeitas.
+                    </div>
+                </div>
+
+                <!-- Perda Anormal e Ociosidade -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Perdas Anormais &amp; Ociosidade</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">CPC 16</span>
+                    </div>
+                    <div class="formula-box">Perda DRE = Qtd. Avariada x Cu</div>
+                    <div class="comment-text">
+                        Sinistros fortuitos e ociosidade não entram no estoque; lançam-se na DRE.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- COLUNA 4: RATEIOS, DEPARTAMENTALIZAÇÃO E INVESTIMENTOS          -->
+        <!-- =============================================================== -->
+        <section class="flex flex-col min-h-0 bg-white border border-slate-300 rounded-sm p-1">
+            <div class="col-header">
+                <span>4. Rateios &amp; Departamentos</span>
+                <span class="text-[10px] text-blue-200 mono">MOD. 04</span>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-between gap-1 overflow-hidden">
+                <!-- Taxa de Rateio Direta -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Taxa de Rateio de CIF</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Direto</span>
+                    </div>
+                    <div class="formula-box">Taxa = CIF Total / Base Total (H/M)</div>
+                    <div class="comment-text">
+                        Coeficiente de rateio para distribuir custos indiretos aos produtos.
+                    </div>
+                </div>
+
+                <!-- CIF Absorvido pelo Lote -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">CIF Absorvido no Lote</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Apropriação</span>
+                    </div>
+                    <div class="formula-box">CIF Lote = Taxa x Consumo da Base</div>
+                    <div class="comment-text">
+                        Aplicação da taxa calculada sobre a base consumida pelo lote analisado.
+                    </div>
+                </div>
+
+                <!-- Rateio Proporcional Ponderado -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Rateio Proporcional (%)</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Ponderado</span>
+                    </div>
+                    <div class="formula-box">CIF_A = CIF Total x (Base_A / Base_Tot)</div>
+                    <div class="comment-text">
+                        Distribuição proporcional com base na participação percentual da atividade.
+                    </div>
+                </div>
+
+                <!-- Rateio Primário (Predial e Energia) - quebra sem truncamento -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Rateio Primário</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Setores</span>
+                    </div>
+                    <div class="formula-box">Alocação = Gasto x<br>(Critério_Setor / Total)</div>
+                    <div class="comment-text">
+                        Aluguel proporcional à área (m²) ou energia à potência de motores instalada (kW).
+                    </div>
+                </div>
+
+                <!-- Rateio Secundário de Apoio - quebra sem truncamento -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Rateio Secundário</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Apoio</span>
+                    </div>
+                    <div class="formula-box">Repasse = Custo_Apoio x<br>(Demanda / Total)</div>
+                    <div class="comment-text">
+                        Transferência de custos de Centros de Apoio (Almoxarifado/Manutenção) aos Produtivos.
+                    </div>
+                </div>
+
+                <!-- Depreciação e Desembolso -->
+                <div class="item-card">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <span class="text-[10px] font-bold text-slate-900 uppercase">Depreciação &amp; Desembolso</span>
+                        <span class="text-[9px] text-slate-500 font-semibold">Financeiro</span>
+                    </div>
+                    <div class="formula-box">Dep. Mês = (Vlr. - Residual) / Meses</div>
+                    <div class="comment-text">
+                        Depreciação: custo não financeiro. Desembolso imediato: Gasto x % de Entrada.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="w-full bg-[#001740] text-slate-200 px-3 py-1 rounded-sm mt-1 flex items-center justify-between border-t border-slate-700 shrink-0 text-[10.5px]">
+        <div class="flex items-center gap-2">
+            <span class="text-white font-bold uppercase tracking-wider text-[10px] bg-blue-900 px-1.5 py-0.5 rounded">Glossário de Siglas:</span>
+            <div class="flex items-center gap-x-2.5 gap-y-0.5 text-slate-300">
+                <span><strong>MP:</strong> Matéria-Prima</span>
+                <span>|</span>
+                <span><strong>MOD:</strong> Mão de Obra Direta</span>
+                <span>|</span>
+                <span><strong>CIF:</strong> Custos Indiretos de Fabricação</span>
+                <span>|</span>
+                <span><strong>CP:</strong> Custo Primário</span>
+                <span>|</span>
+                <span><strong>CT:</strong> Custo de Transformação</span>
+                <span>|</span>
+                <span><strong>CPP:</strong> Custo de Produção do Período</span>
+                <span>|</span>
+                <span><strong>CPV:</strong> Custo dos Produtos Vendidos</span>
+                <span>|</span>
+                <span><strong>Cu:</strong> Custo Unitário Médio</span>
+                <span>|</span>
+                <span><strong>CFU:</strong> Custo Fixo Unitário</span>
+                <span>|</span>
+                <span><strong>CVU:</strong> Custo Variável Unitário</span>
+                <span>|</span>
+                <span><strong>H/M:</strong> Horas-Máquina</span>
+            </div>
+        </div>
+
+        <div class="text-slate-400 font-medium text-[10px]">
+            Prof. Msc. Philipe Sampaio Lima - CEST Anil
+        </div>
+    </footer>
+
+    <script>
+        function alternarComentarios() {
+            const body = document.getElementById('mainBody');
+            const btn = document.getElementById('toggleBtn');
+            const estaOculto = body.classList.toggle('hide-notes');
+
+            if (estaOculto) {
+                btn.innerText = "Exibir Comentários";
+            } else {
+                btn.innerText = "Ocultar Comentários";
+            }
+        }
+
+        function alternarFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.warn(`Fullscreen error: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Teclas de atalho para apoio durante a aula/prova
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'c' || e.key === 'C') {
+                alternarComentarios();
+            }
+            if (e.key === 'f' || e.key === 'F') {
+                alternarFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
